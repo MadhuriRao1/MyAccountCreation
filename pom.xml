@@ -29,13 +29,33 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+				
+				
+				
 				<configuration>
+				
+				<configuration>
+				 
+     <cloudHubDeployment>
+      <uri>https://anypoint.mulesoft.com</uri>
+      <muleVersion>4.4.0</muleVersion>
+      <username>MadhuriRao1</username>
+      <password>8790285804@Amadhuri</password>
+      <applicationName>MyAccountCreation</applicationName>
+      <environment>Dev</environment>
+      <workers>1</workers>
+      <workerType>MICRO</workerType>
+      <objectStoreV2>true</objectStoreV2>  
+   </cloudHubDeployment>
+   
+   </configuration>
 					<sharedLibraries>
 						<sharedLibrary>
 							<groupId>com.mycompany</groupId>
 							<artifactId>mysql-connector-java-8.0.11</artifactId>
 						</sharedLibrary>
 					</sharedLibraries>
+					<classifier>mule-application</classifier>
 				</configuration>
 			</plugin>
 		</plugins>
