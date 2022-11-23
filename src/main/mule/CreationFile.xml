@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="05ce52ed-2a96-4f21-bb3a-2eb5265ca626" >
+		<db:my-sql-connection host="localhost" port="3306" user="root" password="root" database="myaccountcreation" />
+	</db:config>
+	<flow name="CreationFileFlow" doc:id="5e9d4d0d-42e0-4f2c-99dd-bd301009b6db" >
+		<db:insert doc:id="f244fcc8-35d2-4847-9383-94f30b5b1d05" config-ref="Database_Config">
+			<db:sql ><![CDATA[insert into Creation(name, phone, email, gender, dateOfBirth) 
+values (:N, :P, :E, :G, :D) ;]]></db:sql>
+			<db:input-parameters ><![CDATA[#[{
+	N:payload.Name,
+	P:payload.PhoneNo,
+	E:payload.EmailId,
+	G:payload.Gender,
+	D:payload.DateOfBirth
+}]]]></db:input-parameters>
+		</db:insert>
+		<ee:transform doc:name="Transform Message" doc:id="f5583d5d-8cd7-491e-abc4-f1680e7c0ec3" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  message: "Account Created Successfully in Creation Table"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="aea6710d-8256-4f2d-aa1b-85d33df000e5" message="Success report from DataBase-------------#[payload]"/>
+	</flow>
+</mule>

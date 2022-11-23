@@ -1,0 +1,30 @@
+#%RAML 1.0
+title: MyAccountCreation
+version: v1
+baseUri: http://localhost:8081
+
+/Creation:
+  post:
+    body:
+      application/json:
+        example:
+         {
+          "Name":"Mahesh",
+          "PhoneNo":9637418523,
+          "EmailId":"Namratha@gmail.com",
+          "Gender":"Male",
+          "DateOfBirth":"23-Nov-2022"
+        }
+    responses:
+      201:
+        body:
+          application/json:
+            example:
+             {
+              "message":"Account Created Successfully in Creation Table"
+            }
+            
+              
+          
+        
+  
